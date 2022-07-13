@@ -1,0 +1,11 @@
+:root{
+  --main-color: #48b9cf;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.drawer-option {
+  padding: 16px;
+}
