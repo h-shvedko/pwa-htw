@@ -13,16 +13,22 @@
   transition: transform 0.3s;
 }
 
-#create-post video, #create-post canvas {
+#create-post #player, #create-post #canvas {
   width: 512px;
   max-width: 100%;
   display: none;
   margin: auto;
 }
-
-#create-post #pick-image {
+#create-post .map {
+  height: 40%;
+  width: 100%;
   display: none;
 }
+
+
+/*#create-post #pick-image {*/
+/*  display: none;*/
+/*}*/
 
 #create-post #capture-btn {
   margin: 10px auto;
@@ -68,7 +74,7 @@
 
 @media (min-width: 1200px) {
   .shared-moment-card.mdl-card {
-    width: 45%;
+    width: 32%;
   }
 }
 
@@ -86,4 +92,13 @@
   .shared-moment-card .mdl-card__title {
     height: 380px;
   }
+}
+
+.mdl-card__title-text{
+  color: white;
+  font-size: 3rem;
+}
+
+#create-post #pick-image, #create-post #location-loader {
+  display: none;
 }
