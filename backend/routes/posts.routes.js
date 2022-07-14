@@ -4,6 +4,30 @@ const Post = require('../models/posts')
 const upload = require('../middleware/upload')
 const mongoose = require('mongoose')
 require('dotenv').config()
+const webpush = require('web-push');
+
+const publicVapidKey = 'BEzPNFV-8NCohCWCMTePv6RPg2CpXEbkT96oV_kKrwbn8jb4bXOekSPjhqAHsfNGi9D4_tdZ90rllxcUlcakNHY';
+const privateVapidKey = 'xP9WBlUyTblF_wcjeZqxTlV_kJJqceA03qiwfxY26Jg';
+const pushSubscription = {
+    endpoint: 'https://fcm.googleapis.com/fcm/send/famZYtAmaRw:APA91bHjLrbBiuu5JfZwCm8rYAA-GM96mRn5pQayYoT5yTfrBK3uX6CrtRu9cLnpnbVjDHW-N7-Hvi3809bNl_27w5MgiQkRLhWDdlq6qfe833PXmp2Lb9ot8RB-uC8yV0lTqnD7EXQT',
+        expirationTime: null,
+        keys: {
+        p256dh: 'BKlhAFOacw0WS88xJ9ELTTU-EkTBmGYqkOA-BLhpV5G2HCR56u1nZm73dZnGQMj9S41zxpsKENjpVRxHZUbX4D0',
+            auth: 'qqsl7M4cfnpXYopr2ilGLg'
+    }
+};
+
+function sendNotification() {
+    webpush.setVapidDetails('mailto:freiheit@htw-berlin.de', publicVapidKey, privateVapidKey);
+    const payload = JSON.stringify({
+        title: 'New Push Notification',
+        content: 'New data in database!'
+    });
+    webpush.sendNotification(pushSubscription,payload)
+        .catch(err => console.error(err));
+    console.log('push notification sent');
+    // res.status(201).json({ message: 'push notification sent'});
+}
 
 /* ----------------- POST ---------------------------- */
 
@@ -22,6 +46,7 @@ router.post('/', upload.single('file'), async(req, res) => {
         })
         console.log('newPost', newPost)
         await newPost.save();
+        sendNotification();
         res.send(newPost)
     }
 })
